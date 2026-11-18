@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+<rect width="400" height="400" fill="#FFFDF5"/>
+<g id="L">
+<path d="M196 190 C150 90 70 60 52 100 C36 140 70 190 120 200 C70 215 60 270 92 300 C125 330 175 280 196 220 Z" fill="#F29E38" stroke="#7A3E0C" stroke-width="5" stroke-linejoin="round"/>
+<path d="M190 195 C150 120 95 100 80 125" fill="none" stroke="#7A3E0C" stroke-width="3"/>
+</g>
+<use href="#L" transform="translate(400 0) scale(-1 1)"/>
+<circle cx="105" cy="130" r="16" fill="#FFFDF5" stroke="#7A3E0C" stroke-width="3"/>
+<circle cx="120" cy="265" r="12" fill="#FFFDF5" stroke="#7A3E0C" stroke-width="3"/>
+<circle cx="300" cy="136" r="19" fill="#FFFDF5" stroke="#7A3E0C" stroke-width="3"/>
+<circle cx="284" cy="258" r="9" fill="#FFFDF5" stroke="#7A3E0C" stroke-width="3"/>
+<circle cx="150" cy="172" r="7" fill="#7A3E0C"/>
+<circle cx="258" cy="180" r="9" fill="#7A3E0C"/>
+<ellipse cx="200" cy="205" rx="11" ry="70" fill="#4A2A10"/>
+<circle cx="200" cy="128" r="13" fill="#4A2A10"/>
+<path d="M195 118 C185 95 175 80 165 74 M205 118 C215 95 226 82 238 78" fill="none" stroke="#4A2A10" stroke-width="4" stroke-linecap="round"/>
+</svg>
