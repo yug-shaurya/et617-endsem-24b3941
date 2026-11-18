@@ -48,7 +48,7 @@ export const T = {
   actTest: { hi: 'अपना ज्ञान परखो', en: 'Test Your Knowledge' },
   actTestSub: { hi: '6 सवाल और गतिविधियाँ', en: '6 questions and tasks' },
   statObjects: { hi: 'जाँची गई वस्तुएँ', en: 'Objects explored' },
-  statAttempted: { hi: 'हल किए सवाल', en: 'Questions attempted' },
+  statAttempted: { hi: 'कोशिश किए सवाल', en: 'Questions attempted' },
   statCorrect: { hi: 'सही जवाब', en: 'Correct answers' },
   statActivities: { hi: 'पूरी गतिविधियाँ', en: 'Activities completed' },
   yourProgress: { hi: 'तुम्हारी प्रगति', en: 'Your progress' },
