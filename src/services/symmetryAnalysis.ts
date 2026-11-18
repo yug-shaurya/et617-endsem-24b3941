@@ -179,8 +179,8 @@ export function analyse(img: ImageData, axis: Axis, cv?: any): AnalysisResult {
 /** Interpretation bands (calibrated on the built-in samples, see report D6/D4). */
 export function band(sim: number | null): 'similar' | 'different' | 'veryDifferent' | 'uncertain' {
   if (sim === null) return 'uncertain'
-  if (sim >= 90) return 'similar'
-  if (sim >= 75) return 'different'
+  if (sim >= 97.5) return 'similar'
+  if (sim >= 88) return 'different'
   return 'veryDifferent'
 }
 
