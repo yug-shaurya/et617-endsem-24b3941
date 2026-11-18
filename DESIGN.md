@@ -461,8 +461,11 @@ No claims of classroom effectiveness are made here.
 
 | # | Tool | Used for | Chat link / export |
 |---|---|---|---|
-| 1 | Claude Code (VS Code extension), model Claude Opus 5.5 | Creating and renaming the GitHub repository (instructions), clearing the old starter files, then the whole build from the master prompt: scaffolding, design document, all code, SVG illustrations, tests, deployment, screenshots and this report | **[Insert link or export of the Claude Code session here]** |
-| 2 | *(add any other AI chats used, in order)* | | **[Insert link]** |
+| 1 | Claude Code (VS Code extension), model Claude Opus 5.5 — one continuous session | (a) Instructions to create and connect the GitHub repository and rename it to `et617-endsem-24b3941`; (b) removing the old starter files; (c) the whole build from the master prompt: scaffolding, DESIGN.md, all application code, the original SVG illustrations, tests, Vercel deployment, live screenshots and this report; (d) final corrections (LO2 wording, Q1 Hindi feedback, this log) | No shareable link was generated for this local Claude Code session, so none is given here. Its full record is the session transcript on the author's machine and the commit history of this repository (every AI-made commit carries a `Co-Authored-By: Claude` line). |
+
+This log lists only AI tools that are recorded in this project's work. No other AI chat links are included, because none were provided; no links have been invented.
+
+**Live AI analysis status:** the in-app AI object identification has **not** been tested with a real model response. The Vercel project has no AI key configured, so every live test exercised the labelled fallback path ("AI not switched on" → manual object choice → investigation continues). The validator was tested only with unit tests on sample outputs.
 
 ## What the AI produced versus what was checked
 
