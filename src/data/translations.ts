@@ -350,6 +350,11 @@ export const T = {
     hi: 'तुम चाहो तो अपनी तस्वीर एक AI मॉडल को भेज सकती हो, जो वस्तु का नाम, संभावित रेखा और एक छोटा काम सुझाता है। AI गलत हो सकता है, इसलिए तुम नाम बदल सकती हो। AI कभी अंतिम उत्तर नहीं देता।',
     en: 'If you choose, your photo can be sent to an AI model that suggests the object name, a possible axis and a short task. AI can be wrong, so you can correct the name. The AI never gives the final answer.',
   },
+  lblApp: { hi: 'ऐप', en: 'App' },
+  lblCourse: { hi: 'कोर्स', en: 'Course' },
+  lblCard: { hi: 'समस्या कार्ड', en: 'Problem card' },
+  lblClass: { hi: 'कक्षा', en: 'Class' },
+  lblLangs: { hi: 'हिंदी (मुख्य), अंग्रेज़ी', en: 'Hindi (default), English' },
   privacyTitle: { hi: 'तुम्हारी निजता', en: 'Your privacy' },
   privacyD: {
     hi: 'कोई खाता, नाम, फ़ोन नंबर या जगह नहीं ली जाती। प्रगति सिर्फ़ इसी फ़ोन में रहती है। तस्वीरें फ़ोन में ही जाँची जाती हैं और सेव नहीं होतीं। AI को तस्वीर तभी जाती है जब तुम "हाँ" दबाओ।',

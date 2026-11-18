@@ -29,11 +29,12 @@ export default function About() {
         <table className="w-full">
           <tbody>
             {[
-              ['App', 'Symmetry Explorer'],
-              ['Course', 'ET617'],
-              ['Card', 'P1-T4-L1-C2'],
-              ['Roll no.', '24B3941'],
-              ['Class', '6–7'],
+              [t('lblApp'), t('appName')],
+              [t('lblCourse'), 'ET617'],
+              [t('lblCard'), 'P1-T4-L1-C2'],
+              [t('identity'), '24B3941'],
+              [t('lblClass'), '6–7'],
+              [t('langLabel'), t('lblLangs')],
             ].map(([k, v]) => (
               <tr key={k} className="border-b border-mint last:border-0">
                 <td className="py-2 text-muted">{k}</td>

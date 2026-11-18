@@ -9,6 +9,9 @@ const ImageSource = lazy(() => import('./pages/ImageSource'))
 const ImagePreview = lazy(() => import('./pages/ImagePreview'))
 const Investigate = lazy(() => import('./pages/Investigate'))
 const About = lazy(() => import('./pages/About'))
+const Learn = lazy(() => import('./pages/Learn'))
+const Practice = lazy(() => import('./pages/Practice'))
+const Progress = lazy(() => import('./pages/Progress'))
 
 function NotFound() {
   const { t } = useApp()
@@ -37,6 +40,9 @@ export default function App() {
         <Route path="/source" element={<ImageSource />} />
         <Route path="/preview" element={<ImagePreview />} />
         <Route path="/investigate" element={<Investigate />} />
+        <Route path="/learn" element={<Learn />} />
+        <Route path="/practice" element={<Practice />} />
+        <Route path="/progress" element={<Progress />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
