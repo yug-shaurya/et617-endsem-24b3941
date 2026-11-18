@@ -81,7 +81,7 @@ export const QUESTIONS: Question[] = [
     format: { hi: 'बहुविकल्पी', en: 'Multiple choice' },
     prompt: { hi: 'सममिति रेखा क्या होती है?', en: 'What is a line of symmetry?' },
     options: [
-      { id: 'A', label: { hi: 'वह रेखा जो किसी वस्तु को दो मिलते-जुलते हिस्सों में बाँटती है।', en: 'A line that divides an object into two matching halves.' } },
+      { id: 'A', label: { hi: 'वह रेखा जो किसी वस्तु को दो बिल्कुल एक जैसे हिस्सों में बाँटती है।', en: 'A line that divides an object into two matching halves.' } },
       { id: 'B', label: { hi: 'वह रेखा जो किसी वस्तु को दो असमान हिस्सों में बाँटती है।', en: 'A line that divides an object into two unequal halves.' } },
       { id: 'C', label: { hi: 'वस्तु के अंदर खींची गई कोई भी रेखा।', en: 'Any line drawn inside an object.' } },
     ],
@@ -92,7 +92,7 @@ export const QUESTIONS: Question[] = [
     },
     evaluate: (a) =>
       a === 'A'
-        ? fb('q1.correct', 'बिल्कुल सही! सममिति रेखा किसी आकृति को दो मिलते-जुलते हिस्सों में बाँटती है।', 'Correct! A line of symmetry divides a shape into two matching halves.', {}, true)
+        ? fb('q1.correct', 'बिल्कुल सही! सममिति रेखा पर मोड़ने से आकृति के दोनों हिस्से पूरी तरह एक-दूसरे पर आ जाते हैं।', 'Correct! A line of symmetry divides a shape into two matching halves.', {}, true)
         : fb('q1.fold', 'मोड़ने की कल्पना करो। क्या दोनों हिस्से एक-दूसरे पर मिलेंगे?', 'Think about the folding test. Would both halves overlap?'),
   },
   // ---------------- Q2 ----------------

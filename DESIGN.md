@@ -108,7 +108,7 @@ Formats used: **multiple choice** (Q1, Q3), **image classification** (Q2), **mul
   - B. a line that divides an object into two unequal halves
   - C. any line drawn inside an object
 - *Model answer:* A. Folding along a line of symmetry makes the two halves overlap.
-- *Correct feedback:* "बिल्कुल सही! सममिति रेखा किसी आकृति को दो मिलते-जुलते हिस्सों में बाँटती है।" / "Correct! A line of symmetry divides a shape into two matching halves."
+- *Correct feedback:* "बिल्कुल सही! सममिति रेखा पर मोड़ने से आकृति के दोनों हिस्से पूरी तरह एक-दूसरे पर आ जाते हैं।" / "Correct! A line of symmetry divides a shape into two matching halves."
 - *Incorrect feedback:* "मोड़ने की कल्पना करो। क्या दोनों हिस्से एक-दूसरे पर मिलेंगे?" / "Think about the folding test. Would both halves overlap?"
 
 **Q2 — Approximate symmetry (image classification, LO1 + LO3, probes M1)**
