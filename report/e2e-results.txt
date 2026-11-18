@@ -1,0 +1,57 @@
+PASS  A: welcome in Hindi by default
+PASS  A: identity token on welcome
+PASS  A: butterfly vertical axis → approximate band (94%)
+PASS  A: Q1 correct feedback
+PASS  A: Q2 leaf approximate → correct
+PASS  A: Q4 both rectangle axes correct
+PASS  A: Q5 classification correct
+PASS  A: Q6 completion feedback
+PASS  A: badge shown
+PASS  A: badge unlocked
+PASS  A: progress persists after refresh
+PASS  A: English toggle without losing progress
+PASS  A: no page errors ()
+PASS  B: "looks balanced" reason gets M1 feedback in investigation
+PASS  B: Q2 "perfect" → M1-specific feedback
+PASS  B: Q2 shows the difference overlay
+PASS  B: Q2 retry corrected to approximate
+PASS  B: Q4 only-vertical → M2 feedback
+PASS  B: Q4 shows the horizontal fold retry task
+PASS  B: Q4 retry corrected
+PASS  B: Q5 all-perfect → M1 feedback
+PASS  B: Q5 retry corrected
+PASS  B: progress shows misconceptions corrected
+PASS  360px: no horizontal scroll on /home (360)
+PASS  identity footer on /home
+PASS  English mode has no Hindi text in main content on /home
+PASS  360px: no horizontal scroll on /source (360)
+PASS  identity footer on /source
+PASS  English mode has no Hindi text in main content on /source
+PASS  360px: no horizontal scroll on /learn (360)
+PASS  identity footer on /learn
+PASS  English mode has no Hindi text in main content on /learn
+PASS  360px: no horizontal scroll on /practice (360)
+PASS  identity footer on /practice
+PASS  English mode has no Hindi text in main content on /practice
+PASS  360px: no horizontal scroll on /progress (360)
+PASS  identity footer on /progress
+PASS  English mode has no Hindi text in main content on /progress
+PASS  360px: no horizontal scroll on /about (360)
+PASS  identity footer on /about
+PASS  English mode has no Hindi text in main content on /about
+PASS  360px: no horizontal scroll on /source?mode=sample (360)
+PASS  identity footer on /source?mode=sample
+PASS  English mode has no Hindi text in main content on /source?mode=sample
+PASS  gallery: invalid file rejected with message
+PASS  gallery: SVG rejected
+INFO  AI call result on live deployment: !
+The AI service is not switched on yet (no API key on the server). You can choose the object yourself and keep investigating.
+Choose or type the correct object name
+PASS  AI correction: learner sets object name
+PASS  gallery image goes through the same investigation
+PASS  camera: denied/unavailable shows gallery fallback
+PASS  camera: live preview with capture button (fake camera)
+PASS  camera: retake offered after capture
+PASS  camera: captured photo goes to preview
+PASS  tablet: no horizontal scroll
+PASS  desktop: no horizontal scroll
