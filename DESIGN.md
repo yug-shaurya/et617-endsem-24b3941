@@ -29,7 +29,7 @@ Students often learn symmetry from textbook diagrams but find it hard to recogni
 By the end of the activity the learner will be able to:
 
 1. **Identify** whether an everyday object has line symmetry by examining its two halves.
-2. **Locate and draw** a possible line of symmetry, including vertical, horizontal and diagonal lines.
+2. **Locate and draw** a possible line of symmetry on an object, and **test** vertical, horizontal and diagonal candidate lines to decide which of them are valid lines of symmetry (for example, a rectangle's vertical and horizontal lines are valid but its diagonal is not).
 3. **Compare and explain** the difference between perfect, approximate and absent line symmetry.
 
 ## Context of use
@@ -86,7 +86,7 @@ All text exists in Hindi and English (`src/data/translations.ts`, `src/data/ques
 - **Line of symmetry:** "कल्पना करो कि तुम किसी चित्र को ठीक बीच से मोड़ते हो। अगर उसके दोनों हिस्से एक-दूसरे पर पूरी तरह मिल जाते हैं, तो मोड़ने वाली रेखा को सममिति रेखा कहते हैं।" / "Imagine folding a picture exactly in half. If both halves overlap perfectly, the fold is called a line of symmetry."
 - **Reflection:** the line works like a mirror, so one half appears flipped on the other side.
 - **Directions:** the line may be vertical, horizontal or diagonal; the direction depends on the shape.
-- **Perfect / approximate / none:** a square is perfect; a leaf or butterfly is approximate (very similar, with small differences); an irregular stone has no symmetry.
+- **Perfect / approximate / none:** *perfect* symmetry means the two halves match exactly when folded (a square drawn with a ruler); *approximate* symmetry means the halves are very similar but not identical (a real leaf or butterfly); *no symmetry* means no fold line makes the halves match (an irregular stone).
 
 ### Demonstrations (Learn, parts 2–5, interactive canvas)
 
@@ -94,7 +94,7 @@ All text exists in Hindi and English (`src/data/translations.ts`, `src/data/ques
 |---|---|---|
 | 1 Butterfly | Toggle the reflected half and the difference view on a vertical axis | Wings nearly match but the spots differ → approximate symmetry |
 | 2 Rectangle | Switch the axis between vertical, horizontal and diagonal | Two lines of symmetry; the diagonal does not work unless it is a square |
-| 3 Square | Try vertical, horizontal and both diagonals | Four lines of symmetry |
+| 3 Square | Try vertical, horizontal and both diagonals | Four lines of symmetry, including the diagonals (shown in the lesson; not separately assessed) |
 | 4 Leaf | Difference view (red) is on by default | Balanced-looking ≠ perfect; the edges differ |
 
 ### The six tasks (actual content)
@@ -410,7 +410,7 @@ The symmetry estimate is deterministic image processing (OpenCV.js `warpAffine` 
 | Outcome | Assessment items / rubric | Data collected (prototype: LocalStorage `se24b3941.progress.v1`) | Success criterion |
 |---|---|---|---|
 | **LO1 Identify** whether an object has line symmetry | Q2 (leaf), Q5 (3 objects) | Q2 answer and attempt number; Q5 answer per item; M1 evidence | Q2 correct within **2 attempts** AND **≥ 2 of 3** Q5 objects correct on the final attempt (implemented as the "LO1 met" check on Progress) |
-| **LO2 Locate and draw** a line of symmetry (vertical, horizontal, diagonal) | Q3 (butterfly axis), Q4 (rectangle axes), Q6 (axis placement) | Q3/Q4 answers, Q4 axis set, M2 evidence, Q6 completion with axis interaction and the similarity at the decision | Q3 correct; Q4 exactly {vertical, horizontal} (the diagonal excluded); Q6 completed after moving/rotating the axis (implemented "LO2 met") |
+| **LO2 Locate and draw** a line of symmetry, and test vertical, horizontal and diagonal candidates | Q3 (butterfly axis), Q4 (rectangle axes), Q6 (axis placement) | Q3/Q4 answers, Q4 axis set, M2 evidence, Q6 completion with axis interaction and the similarity at the decision | Q3 correct; Q4 exactly {vertical, horizontal} (the diagonal excluded); Q6 completed after moving/rotating the axis (implemented "LO2 met") |
 | **LO3 Compare and explain** perfect vs approximate vs absent symmetry | Q2, Q5, Q6 (decision + reason) | Q6 classification, reason, image source, similarity; Q2/Q5 final correctness | Q2 and Q5 solved AND a Q6 decision whose reason is observation-based (not "looks balanced") and consistent with the classification (implemented "LO3 met") |
 
 **Rubric for the Q6 reasoned classification (for a teacher reviewing the logged data):**
