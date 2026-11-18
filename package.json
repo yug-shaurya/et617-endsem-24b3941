@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "check:i18n": "node scripts/check-translations.mjs",
     "test": "node --test tests/validate.test.ts",
-    "test:e2e": "node tests/scenarios.mjs"
+    "test:e2e": "node tests/scenarios.mjs",
+    "report:pdf": "node scripts/export-report-pdf.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",
@@ -25,6 +26,7 @@
     "@types/react-dom": "^19.3.0",
     "@vercel/node": "^31.0.2",
     "@vitejs/plugin-react": "^6.1.2",
+    "marked": "^18.2.1",
     "oxlint": "^1.90.0",
     "playwright": "^1.65.1",
     "tailwindcss": "^4.3.5",

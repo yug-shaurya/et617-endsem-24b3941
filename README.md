@@ -1,32 +1,31 @@
-# React + TypeScript + Vite
+# Symmetry Explorer · सममिति खोजी
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+ET617 End-Semester · Roll no. **24B3941** · Card **P1-T4-L1-C2** (context-aware visual learning · symmetry in everyday objects · rural Class 6–8 learner on a parent's phone · learner's own language)
 
-Currently, two official plugins are available:
+- **Live app:** https://et617-24b3941.vercel.app
+- **Design document and final report (D1–D8):** [DESIGN.md](DESIGN.md) · PDF: [report/Symmetry-Explorer-Report-24B3941.pdf](report/Symmetry-Explorer-Report-24B3941.pdf)
+- **Live-test screenshots:** [report/screenshots/](report/screenshots/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+A mobile-first, Hindi-first web app. Learners pick an image (camera, gallery or a built-in sample), place and rotate a line of symmetry, see the reflected half and a difference map, and decide for themselves whether the symmetry is perfect, approximate or absent. It includes a short visual lesson, six assessed tasks with feedback that targets the two misconceptions, optional AI object identification, and progress saved on the device.
 
-## React Compiler
+## Run locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev          # http://localhost:5173  (the /api route runs on Vercel or with `vercel dev`)
+npm run build        # translation coverage check + typecheck + production build
+npm test             # unit tests for the AI output validator
+BASE=https://et617-24b3941.vercel.app npm run test:e2e   # live D5 scenarios + screenshots (needs `npx playwright install chromium`)
+npm run report:pdf   # export DESIGN.md to PDF
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## AI configuration
+
+Set **one** server-side variable in Vercel → Project → Settings → Environment Variables (see [.env.example](.env.example)):
+`ANTHROPIC_API_KEY` (preferred; default model `claude-opus-5-5`), or `OPENAI_API_KEY`, or `GEMINI_API_KEY`. Without a key, the app shows a clearly labelled "AI not switched on" state, and the manual investigation still works fully.
+
+## Structure
+
+`api/analyse-image.ts` (serverless vision call + validation) · `src/pages/*` (9 screens) · `src/components/SymmetryCanvas.tsx` (interactive axis, reflection, fold) · `src/services/symmetryAnalysis.ts` (OpenCV.js / JS reflection + similarity) · `src/data/{translations,questions,sampleImages}.ts` · `public/images/samples/*.svg` (original illustrations) · `tests/` · `scripts/`
+
+Built from the Vite `react-ts` starter. Libraries: React, React Router, Tailwind CSS, OpenCV.js, Anthropic SDK, Playwright (tests).
