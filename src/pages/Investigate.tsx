@@ -215,7 +215,7 @@ export default function Investigate() {
             </button>
           ))}
         </div>
-        <button type="button" className="btn btn-primary mt-4 w-full" disabled={!choice || !reason || (q6 && !interacted && !result)} onClick={save} data-testid="save-decision">
+        <button type="button" className="btn btn-primary mt-4 w-full" disabled={!choice || !reason || (q6 && !interacted)} onClick={save} data-testid="save-decision">
           {t('saveDecision')}
         </button>
         {saved && (

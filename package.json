@@ -8,7 +8,9 @@
     "build": "node scripts/check-translations.mjs && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "check:i18n": "node scripts/check-translations.mjs"
+    "check:i18n": "node scripts/check-translations.mjs",
+    "test": "node --test tests/validate.test.ts",
+    "test:e2e": "node tests/scenarios.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",

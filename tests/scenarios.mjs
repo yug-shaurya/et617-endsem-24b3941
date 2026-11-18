@@ -1,0 +1,281 @@
+// D5 learner scenarios, run against the real deployed app in a phone-sized browser.
+// Usage: BASE=https://et617-24b3941.vercel.app node tests/scenarios.mjs
+import { chromium } from 'playwright'
+import { mkdirSync } from 'node:fs'
+
+const BASE = process.env.BASE || 'https://et617-24b3941.vercel.app'
+const OUT = 'report/screenshots'
+const phone = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }
+const log = []
+const check = (cond, msg) => {
+  log.push(`${cond ? 'PASS' : 'FAIL'}  ${msg}`)
+  if (!cond) process.exitCode = 1
+}
+
+async function shot(page, dir, name, sel) {
+  mkdirSync(`${OUT}/${dir}`, { recursive: true })
+  if (sel) await page.locator(sel).first().scrollIntoViewIfNeeded()
+  await page.waitForTimeout(350)
+  await page.screenshot({ path: `${OUT}/${dir}/${name}.png` })
+}
+const text = (page, sel) => page.locator(sel).first().innerText()
+
+const browser = await chromium.launch({ args: ['--use-fake-device-for-media-stream'] })
+
+/* ------------------------- Scenario A: correct learner ------------------------- */
+{
+  const ctx = await browser.newContext(phone)
+  const page = await ctx.newPage()
+  const errs = []
+  page.on('pageerror', (e) => errs.push(e.message))
+  const D = 'scenario-correct'
+  await page.goto(BASE)
+  check((await text(page, 'h1')).includes('सममिति की दुनिया'), 'A: welcome in Hindi by default')
+  check((await text(page, '[data-testid=identity-footer]')).includes('24B3941'), 'A: identity token on welcome')
+  await shot(page, D, '01-welcome-hindi')
+  await page.click('[data-testid=start]')
+  await shot(page, D, '02-home')
+  await page.click('[data-testid=act-explore]')
+  await shot(page, D, '03-image-source')
+  await page.click('[data-testid=src-sample]')
+  await shot(page, D, '04-sample-library')
+  await page.click('[data-testid=sample-butterfly]')
+  await shot(page, D, '05-preview-butterfly')
+  await page.click('[data-testid=to-investigate]')
+  await page.waitForSelector('[data-testid=symmetry-canvas]')
+  await page.click('[data-testid=preset-0]')
+  await page.waitForTimeout(400)
+  const simV = await text(page, '[data-testid=similarity] .text-4xl')
+  await shot(page, D, '06-investigate-vertical', '[data-testid=symmetry-canvas]')
+  await shot(page, D, '07-similarity-estimate', '[data-testid=similarity]')
+  check(parseInt(simV) >= 88 && parseInt(simV) < 98, `A: butterfly vertical axis → approximate band (${simV})`)
+  await page.click('[data-testid=decide-approximate]')
+  await page.click('[data-testid=reason-small]')
+  await page.click('[data-testid=save-decision]')
+  await shot(page, D, '08-decision-saved', '[data-testid=decision-feedback]')
+
+  // practice
+  await page.goto(`${BASE}/practice`)
+  await page.click('[data-testid=opt-A]')
+  await page.click('[data-testid=check]')
+  check(await page.locator('[data-testid=fb-correct]').isVisible(), 'A: Q1 correct feedback')
+  await shot(page, D, '09-q1-correct', '[data-testid=feedback]')
+  await page.click('[data-testid=next-q]')
+  await page.click('[data-testid=opt-B]')
+  await page.click('[data-testid=check]')
+  check((await text(page, '[data-testid=feedback]')).includes('लगभग सममिति'), 'A: Q2 leaf approximate → correct')
+  await shot(page, D, '10-q2-leaf-correct', '[data-testid=feedback]')
+  await page.click('[data-testid=next-q]')
+  await page.click('[data-testid=opt-A]')
+  await page.click('[data-testid=check]')
+  await shot(page, D, '11-q3-butterfly-vertical-correct', '[data-testid=feedback]')
+  await page.click('[data-testid=next-q]')
+  await page.click('[data-testid=opt-V]')
+  await page.click('[data-testid=opt-H]')
+  await page.click('[data-testid=check]')
+  check(await page.locator('[data-testid=fb-correct]').isVisible(), 'A: Q4 both rectangle axes correct')
+  await shot(page, D, '12-q4-rectangle-two-axes-correct', '[data-testid=feedback]')
+  await page.click('[data-testid=next-q]')
+  await page.click('[data-testid=cls-butterfly-approximate]')
+  await page.click('[data-testid=cls-stone-none]')
+  await page.click('[data-testid=cls-square-perfect]')
+  await page.click('[data-testid=check]')
+  check(await page.locator('[data-testid=fb-correct]').isVisible(), 'A: Q5 classification correct')
+  await shot(page, D, '13-q5-classify-correct', '[data-testid=feedback]')
+  await page.click('[data-testid=next-q]')
+  await shot(page, D, '14-q6-task')
+  await page.click('[data-testid=q6-start]')
+  await page.click('[data-testid=src-sample]')
+  await page.click('[data-testid=sample-leaf]')
+  await page.click('[data-testid=to-investigate]')
+  await page.waitForSelector('[data-testid=symmetry-canvas]')
+  await page.click('[data-testid=preset-45]')
+  await page.click('[data-testid=preset-0]')
+  await page.click('[data-testid=toggle-diff]')
+  await page.waitForTimeout(400)
+  await shot(page, D, '15-q6-investigate-leaf-diff', '[data-testid=symmetry-canvas]')
+  await page.click('[data-testid=decide-approximate]')
+  await page.click('[data-testid=reason-small]')
+  await page.click('[data-testid=save-decision]')
+  check((await text(page, '[data-testid=decision-feedback]')).includes('तुमने खुद वस्तु की जाँच की'), 'A: Q6 completion feedback')
+  await shot(page, D, '16-q6-complete', '[data-testid=decision-feedback]')
+  await page.click('[data-testid=back-practice]')
+  await page.click('[data-testid=finish]')
+  await page.waitForSelector('[data-testid=badge]')
+  check((await text(page, '[data-testid=badge]')).includes('सममिति जासूस'), 'A: badge shown')
+  check(!(await text(page, '[data-testid=badge]')).includes('बैज पाने के लिए'), 'A: badge unlocked')
+  await shot(page, D, '17-progress-badge')
+  await shot(page, D, '18-progress-outcomes', '[data-testid=misconceptions]')
+  // persistence after reload + English toggle
+  await page.reload()
+  check((await text(page, '[data-testid=summary]')).includes('6'), 'A: progress persists after refresh')
+  await page.click('button:has-text("English")')
+  check((await text(page, '[data-testid=badge]')).includes('Symmetry Detective'), 'A: English toggle without losing progress')
+  await shot(page, D, '19-progress-english')
+  check(errs.length === 0, `A: no page errors (${errs.join('; ')})`)
+  await ctx.close()
+}
+
+/* ------------------------- Scenario B: learner with M1 (and M2) ------------------------- */
+{
+  const ctx = await browser.newContext(phone)
+  const page = await ctx.newPage()
+  const D = 'scenario-misconception'
+  await page.goto(`${BASE}/source?mode=sample`)
+  await page.click('[data-testid=sample-leaf]')
+  await shot(page, D, '01-preview-leaf')
+  await page.click('[data-testid=to-investigate]')
+  await page.waitForSelector('[data-testid=symmetry-canvas]')
+  await page.click('[data-testid=decide-perfect]')
+  await page.click('[data-testid=reason-looks]')
+  await page.click('[data-testid=save-decision]')
+  check((await text(page, '[data-testid=decision-feedback]')).includes('संतुलित'), 'B: "looks balanced" reason gets M1 feedback in investigation')
+  await shot(page, D, '02-investigate-says-perfect-because-balanced', '[data-testid=decision-feedback]')
+
+  await page.goto(`${BASE}/practice`)
+  await page.click('[data-testid=opt-A]') // Q1 correct
+  await page.click('[data-testid=check]')
+  await page.click('[data-testid=next-q]')
+  await page.click('[data-testid=opt-A]') // Q2: perfect symmetry  (M1)
+  await page.click('[data-testid=check]')
+  check(await page.locator('[data-testid=fb-q2\\.m1]').isVisible(), 'B: Q2 "perfect" → M1-specific feedback')
+  check(await page.locator('[data-testid=leaf-overlay]').isVisible(), 'B: Q2 shows the difference overlay')
+  await shot(page, D, '03-q2-m1-feedback', '[data-testid=feedback]')
+  await shot(page, D, '04-q2-difference-overlay', '[data-testid=leaf-overlay]')
+  await page.click('[data-testid=opt-B]') // retry
+  await page.click('[data-testid=check]')
+  check(await page.locator('[data-testid=fb-correct]').isVisible(), 'B: Q2 retry corrected to approximate')
+  await shot(page, D, '05-q2-retry-correct', '[data-testid=feedback]')
+  await page.click('[data-testid=next-q]')
+  await page.click('[data-testid=opt-A]')
+  await page.click('[data-testid=check]')
+  await page.click('[data-testid=next-q]')
+  await page.click('[data-testid=opt-V]') // Q4 only vertical (M2)
+  await page.click('[data-testid=check]')
+  check(await page.locator('[data-testid=fb-q4\\.m2]').isVisible(), 'B: Q4 only-vertical → M2 feedback')
+  check(await page.locator('[data-testid=m2-task]').isVisible(), 'B: Q4 shows the horizontal fold retry task')
+  await shot(page, D, '06-q4-m2-feedback', '[data-testid=feedback]')
+  await page.locator('[data-testid=m2-task] button').click()
+  await page.waitForTimeout(1600)
+  await shot(page, D, '07-q4-m2-fold-task', '[data-testid=m2-task]')
+  await page.click('[data-testid=opt-H]')
+  await page.click('[data-testid=check]')
+  check(await page.locator('[data-testid=fb-correct]').isVisible(), 'B: Q4 retry corrected')
+  await page.click('[data-testid=next-q]')
+  for (const it of ['butterfly', 'stone', 'square']) await page.click(`[data-testid=cls-${it}-perfect]`) // Q5 all perfect (M1)
+  await page.click('[data-testid=check]')
+  check(await page.locator('[data-testid=fb-q5\\.allperfect]').isVisible(), 'B: Q5 all-perfect → M1 feedback')
+  await shot(page, D, '08-q5-all-perfect-m1', '[data-testid=feedback]')
+  await page.click('[data-testid=cls-butterfly-approximate]')
+  await page.click('[data-testid=cls-stone-none]')
+  await page.click('[data-testid=cls-square-perfect]')
+  await page.click('[data-testid=check]')
+  check(await page.locator('[data-testid=fb-correct]').isVisible(), 'B: Q5 retry corrected')
+  await page.goto(`${BASE}/progress`)
+  const mis = await text(page, '[data-testid=misconceptions]')
+  check(mis.includes('सुधार लिया'), 'B: progress shows misconceptions corrected')
+  await shot(page, D, '09-progress-misconceptions', '[data-testid=misconceptions]')
+  await shot(page, D, '10-progress-summary')
+  await ctx.close()
+}
+
+/* ------------------------- Other checks ------------------------- */
+{
+  const ctx = await browser.newContext({ ...phone, viewport: { width: 360, height: 760 } })
+  const page = await ctx.newPage()
+  const D = 'other'
+  // English everywhere + 360 px width, no horizontal scroll
+  await page.goto(BASE)
+  await page.click('button:has-text("English")')
+  await shot(page, D, '01-welcome-english-360')
+  for (const r of ['/home', '/source', '/learn', '/practice', '/progress', '/about', '/source?mode=sample']) {
+    await page.goto(BASE + r)
+    await page.waitForTimeout(300)
+    const w = await page.evaluate(() => document.documentElement.scrollWidth)
+    check(w <= 360, `360px: no horizontal scroll on ${r} (${w})`)
+    check((await text(page, '[data-testid=identity-footer]')).includes('24B3941'), `identity footer on ${r}`)
+    // sample cards intentionally show the Hindi name as a secondary label (both names required on each card)
+    const hasDev = await page.evaluate(() => { const m = document.querySelector('main')?.cloneNode(true); m?.querySelectorAll('.text-xs').forEach((e) => e.remove()); return /[ऀ-ॿ]/.test(m?.innerText ?? m?.textContent ?? '') })
+    check(!hasDev, `English mode has no Hindi text in main content on ${r}`)
+  }
+  await page.goto(BASE + '/learn')
+  for (let i = 0; i < 2; i++) await page.click('[data-testid=learn-next]')
+  await shot(page, D, '02-learn-rectangle-english')
+  // gallery: invalid file + valid file + AI (unconfigured) fallback + correction
+  await page.goto(BASE + '/source?mode=gallery')
+  await page.setInputFiles('[data-testid=gallery-input]', { name: 'notes.txt', mimeType: 'text/plain', buffer: Buffer.from('hello') })
+  check((await page.locator('[role=status]').first().innerText()).includes('not a supported image'), 'gallery: invalid file rejected with message')
+  await shot(page, D, '03-gallery-invalid-file')
+  await page.setInputFiles('[data-testid=gallery-input]', 'public/images/samples/flower.svg'.replace('.svg', '.svg'))
+  await page.waitForTimeout(300)
+  // SVG is not an allowed gallery type
+  check((await page.locator('[role=status]').first().innerText()).includes('not a supported image'), 'gallery: SVG rejected')
+  const png = await (async () => {
+    const p = await ctx.newPage()
+    await p.setViewportSize({ width: 300, height: 300 })
+    await p.goto(BASE + '/images/samples/water-pot.svg')
+    const b = await p.screenshot({ type: 'png' })
+    await p.close()
+    return b
+  })()
+  await page.setInputFiles('[data-testid=gallery-input]', { name: 'pot.png', mimeType: 'image/png', buffer: png })
+  await page.click('[data-testid=gallery-use]')
+  await page.click('[data-testid=ai-open]')
+  await shot(page, D, '04-ai-consent')
+  await page.click('[data-testid=ai-confirm]')
+  await page.waitForSelector('[data-testid=ai-fail], [data-testid=ai-result]', { timeout: 60000 })
+  const aiOk = await page.locator('[data-testid=ai-result]').isVisible()
+  log.push(`INFO  AI call result on live deployment: ${aiOk ? 'model answered' : await text(page, '[data-testid=ai-fail]')}`)
+  await shot(page, D, aiOk ? '05-ai-result' : '05-ai-fallback', aiOk ? '[data-testid=ai-result]' : '[data-testid=ai-fail]')
+  if (aiOk) await page.click('[data-testid=ai-wrong]')
+  else await page.locator('[data-testid=ai-fail] button').click()
+  await page.click('button.chip:has-text("Water pot")')
+  check((await text(page, '[data-testid=object-name]')) === 'Water pot', 'AI correction: learner sets object name')
+  await page.click('[data-testid=to-investigate]')
+  await page.waitForSelector('[data-testid=symmetry-canvas]')
+  await page.waitForTimeout(500)
+  check(/\d+%|—/.test(await text(page, '[data-testid=similarity] .text-4xl')), 'gallery image goes through the same investigation')
+  await shot(page, D, '06-gallery-investigate')
+  // camera denied → fallback
+  await page.goto(BASE + '/source?mode=camera')
+  await page.waitForTimeout(1500)
+  await shot(page, D, '07-camera-denied-fallback')
+  check(await page.locator('button:has-text("Use gallery instead")').isVisible(), 'camera: denied/unavailable shows gallery fallback')
+  await ctx.close()
+}
+{
+  // camera granted with fake device → live preview, capture, retake
+  const camBrowser = await chromium.launch({ args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] })
+  const ctx = await camBrowser.newContext({ ...phone, permissions: ['camera'] })
+  const page = await ctx.newPage()
+  await page.goto(BASE + '/source?mode=camera')
+  const live = await page.waitForSelector('[data-testid=capture]', { timeout: 10000 }).then(() => true).catch(() => false)
+  check(live, 'camera: live preview with capture button (fake camera)')
+  if (live) {
+    await page.waitForTimeout(800)
+    await page.click('[data-testid=capture]')
+    check(await page.locator('button:has-text("फिर से खींचो")').isVisible(), 'camera: retake offered after capture')
+    await shot(page, 'other', '08-camera-captured')
+    await page.click('button:has-text("यही तस्वीर लो")')
+    check(page.url().includes('/preview'), 'camera: captured photo goes to preview')
+  }
+  await ctx.close()
+  await camBrowser.close()
+}
+// Desktop / tablet layouts
+for (const [w, h, n] of [[820, 1180, 'tablet'], [1366, 900, 'desktop']]) {
+  const ctx = await browser.newContext({ viewport: { width: w, height: h } })
+  const page = await ctx.newPage()
+  await page.goto(BASE + '/source?mode=sample')
+  await page.click('[data-testid=sample-square]')
+  await page.click('[data-testid=to-investigate]')
+  await page.waitForSelector('[data-testid=symmetry-canvas]')
+  await page.waitForTimeout(500)
+  await page.screenshot({ path: `${OUT}/other/09-investigate-${n}.png` })
+  const sw = await page.evaluate(() => document.documentElement.scrollWidth)
+  check(sw <= w, `${n}: no horizontal scroll`)
+  await ctx.close()
+}
+
+await browser.close()
+console.log(log.join('\n'))
